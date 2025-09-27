@@ -5,33 +5,33 @@ Created on Mon Oct 26 09:17:47 2020
 @author: Malcor
 """
 
-import sqlite3
-from sqlalchemy import Column, Integer, String
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy import create_engine
+from sqlalchemy import Column, String, create_engine
+from sqlalchemy.orm import declarative_base, sessionmaker
 
 
-engine = create_engine('sqlite:///BDDlite.db', echo=True)
+engine = create_engine('sqlite:///BDDlite.db', echo=False)
 
-
-    
 Session = sessionmaker(bind=engine)
-session = Session()
-
 Base = declarative_base()
-class User(Base):
+
+
+class InfoMeteoLite(Base):
     __tablename__ = 'info_meteolite'
-    Date = Column(Integer, primary_key=True)
+    Date = Column(String, primary_key=True)
     Time = Column(String)
 
 
-# Querying
-k= []
-for instance in session.query(User).order_by('Date'):
-   k.append(instance)
+def main() -> None:
+    Base.metadata.create_all(engine)
+    session = Session()
+    try:
+        results = session.query(InfoMeteoLite).order_by(InfoMeteoLite.Date).all()
+        print([(row.Date, row.Time) for row in results])
+    finally:
+        session.close()
 
-  
-print(k)
+
+if __name__ == "__main__":
+    main()
 
 
