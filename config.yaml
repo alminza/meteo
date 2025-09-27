@@ -1,0 +1,20 @@
+soil:
+	providers:
+		soilgrids:
+			tiles_url: "https://maps.isric.org/mapserv?map=/map/soilgrids.map&LAYERS=bdod_mean&FORMAT=image/png&TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&STYLES=&SRS=EPSG:3857&BBOX={bbox}&WIDTH=256&HEIGHT=256"
+		esdac:
+			wms_url: "https://esdac.jrc.ec.europa.eu/arcgis/services/soil/background/MapServer/WMSServer"
+		brgm:
+			wms_url: "https://geoservices.brgm.fr/geologie"
+		custom:
+			tiles_url: ""
+			wms_url: ""
+cache:
+	tiles_dir: ".tiles/soil"
+	ttl_days: 45
+interpolation:
+	defaults:
+		method: "idw"
+		power: 2.0
+		k: 8
+		resolution_km: 5.0
